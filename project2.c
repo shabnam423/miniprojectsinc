@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-
+/*
 int Methods()
 {
     printf("\n1. Subtraction\n");
@@ -63,3 +63,37 @@ int main()
     }
     return 0;
 }
+*/
+//          TASK2   
+
+int main(){
+    int first;
+    int second;
+    char sign;
+printf("Enter calculation: ");
+scanf("%d%c%d",first,second,sign);
+printf("\n%d %c %d",first,second,sign);
+if(sign=='*'){
+    printf("=%d",first*second);
+}
+else if(sign=='/'){
+    printf("=%d",first/second);
+}
+else if (sign=='+'){
+    printf("=%d",first+second);
+}
+else if (sign=='-'){
+    printf("=%d",first-second);
+}
+return 0;
+}
+
+
+
+
+
+
+
+
+
+
