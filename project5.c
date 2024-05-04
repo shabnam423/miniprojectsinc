@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+//QUIZ
 struct Question
 {
     char answer[2];

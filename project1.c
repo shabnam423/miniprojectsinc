@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+// ROCK PAPER SCISSORS
 
 int main() {
     srand(time(0));
