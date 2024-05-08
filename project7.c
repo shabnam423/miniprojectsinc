@@ -89,6 +89,7 @@ int main()
                         strcpy(users[i].password,passWord);
                     }
                 }
+                break;
             }
         }
         break;
