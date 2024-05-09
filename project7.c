@@ -16,6 +16,7 @@ eger evvelden qeydiyyatdan kecilibse siz hesaba daxil oldunuz.
 yoxdusa da 'qeydiyyatdan kecin' yazilsin
 
 */
+
 #define MAX_LOGGER 50
 #define CAPACITY 50
 struct Login
@@ -35,19 +36,19 @@ int listOfChoices()
 }
 int main()
 {
-    strcpy(users[0].gmail,"sebnemnezerli@gmail.com");
-    strcpy(users[0].password,"12345");
-    strcpy(users[1].gmail,"sebnemnezerli2@gmail.com");
-    strcpy(users[1].password,"123456");
-    strcpy(users[2].gmail,"sebnemnezerli3@gmail.com");
-    strcpy(users[2].password,"1234567");
-    strcpy(users[3].gmail,"sebnemnezerli4@gmail.com");
-    strcpy(users[3].password,"12345678");
-    strcpy(users[4].gmail,"sebnemnezerli5@gmail.com");
-    strcpy(users[4].password,"123456789");
+    strcpy(users[0].gmail, "sebnemnezerli@gmail.com");
+    strcpy(users[0].password, "12345");
+    strcpy(users[1].gmail, "sebnemnezerli2@gmail.com");
+    strcpy(users[1].password, "123456");
+    strcpy(users[2].gmail, "sebnemnezerli3@gmail.com");
+    strcpy(users[2].password, "1234567");
+    strcpy(users[3].gmail, "sebnemnezerli4@gmail.com");
+    strcpy(users[3].password, "12345678");
+    strcpy(users[4].gmail, "sebnemnezerli5@gmail.com");
+    strcpy(users[4].password, "123456789");
     switch (listOfChoices())
     {
-    case 1:
+    case 1:{
         printf("Enter your gmail: ");
         char Gmail[CAPACITY];
         scanf("%s", &Gmail);
@@ -56,7 +57,7 @@ int main()
         scanf("%s", &passWord);
         for (int i = 0; i < MAX_LOGGER; i++)
         {
-            if (strcmp(users[i].gmail, Gmail)==0 && strcmp( users[i].password , passWord)==0)
+            if (strcmp(users[i].gmail, Gmail) == 0 && strcmp(users[i].password, passWord) == 0)
             {
                 printf("Logged in successfully.\n");
                 break;
@@ -68,34 +69,42 @@ int main()
                 break;
             }
         }
+    }
     case 2:
+    {
         printf("Enter your gmail: ");
         char Gmail[CAPACITY];
         scanf("%s", Gmail);
         printf("Enter your password: ");
-        char passWord[CAPACITY];
-        scanf("%s", passWord);
+        char Password[CAPACITY];
+        scanf("%s", Password);
         for (int i = 0; i < MAX_LOGGER; i++)
         {
-            if (strcmp(users[i].gmail,Gmail)==0 && strcmp(users[i].password ,passWord)==0)
+            if (strcmp(users[i].gmail, Gmail) == 0 && strcmp(users[i].password, Password) == 0)
             {
                 printf("You are already logged in.\n");
                 break;
             }
-            else{
-                for(int i=0;i<MAX_LOGGER;i++){
-                    if(strcmp(users[i].gmail,Gmail)!=0){
-                        strcpy(users[i].gmail,Gmail);
-                        strcpy(users[i].password,passWord);
+            else
+            {
+                for (int i = 0; i < MAX_LOGGER; i++)
+                {
+                    if (strcmp(users[i].gmail, Gmail) != 0)
+                    {
+                        strcpy(users[i].gmail, Gmail);
+                        strcpy(users[i].password, Password);
                     }
                 }
                 break;
             }
         }
         break;
-        case 3:
-            printf("Goodbye.\n");
-            break;
+    }
+    case 3:
+   { 
+        printf("Goodbye.\n");
+        break;
+    }
     }
     return 0;
 }
