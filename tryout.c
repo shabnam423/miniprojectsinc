@@ -38,7 +38,10 @@ struct Book
     float price;
     int quantity;
 };
-int UpdateBookDetails(struct Book bookArray[])
+int List(int choice);
+void ShowBooks(struct Book bookArray[MAX_BOOKS]);
+int UpdateBookDetails(struct Book bookArray[MAX_BOOKS]);
+int UpdateBookDetails(struct Book bookArray[MAX_BOOKS])
 {
     int choice;
     int i;
@@ -91,7 +94,7 @@ int List(int choice)
     scanf("%d", &choice);
     return choice;
 }
-void ShowBooks(struct Book bookArray[])
+void ShowBooks(struct Book bookArray[MAX_BOOKS])
 {
     for (int i = 0; i < MAX_BOOKS; i++)
     {
@@ -131,7 +134,7 @@ int main()
     {
 
         int choice;
-        int List(choice);
+        List(choice);
         if (choice == 1)
         {
             ShowBooks(bookArray);
@@ -236,7 +239,7 @@ int main()
 
             soldBook[soldBookindex] = bookArray[i - 1];
             soldBookindex++;
-            
+            bookArray[i - 1].quantity--;
             for (int j = i; j < MAX_BOOKS; ++j)
             {
                 strcpy(bookArray[j].title, bookArray[j + 1].title);
@@ -244,6 +247,15 @@ int main()
                 strcpy(bookArray[j].genre, bookArray[j + 1].genre);
                 bookArray[j].price = bookArray[j + 1].price;
                 bookArray[j].quantity = bookArray[j + 1].quantity;
+            }
+        }
+        else if (choice == 6)
+        {
+            FILE *file;
+            file = fopen("text.txt", "a");
+            for (int i = 0; i < soldBookindex; i++)
+            {
+                fprintf(file, "%s %s %s %.2f %d\n", soldBook[i].title, soldBook[i].author, soldBook[i].genre, soldBook[i].price, soldBook[i].quantity);
             }
         }
         ShowBooks(bookArray);
