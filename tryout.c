@@ -19,6 +19,7 @@
 // file, allowing users to persist data between sessions.
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #define Red "\x1b[31m"
 #define Yellow "\x1b[33m"
 #define Blue "\x1b[34m"
@@ -79,26 +80,32 @@ int UpdateBookDetails(struct Book bookArray[MAX_BOOKS])
     }
 }
 
-int List(int choice)
+int List(int choose)
 {
-
-    printf("Choose an option: \n");
+printf("***************************************************\n");
     printf("1. Display all Books: \n");
     printf("2. Add New Book \n");
     printf("3. Search Books: \n");
     printf("4. Update Book Details \n"); // only price & quantity
     printf("5. Sell Books \n");
     printf("6. View Sales Report \n");
-    printf("7. Save and Load Data \n");
-    printf(Red "8. Exit \n" Reset);
-    scanf("%d", &choice);
-    return choice;
+    printf(Red "7. Exit \n" Reset);
+    printf("Choose an option: \n");
+    scanf("%d", &choose);
+    if(choose == 7){
+        printf(Cyan"Thank you for using our program!\n"Reset);
+        exit(0);
+    }
+    return choose;
 }
 void ShowBooks(struct Book bookArray[MAX_BOOKS])
-{
+{ 
     for (int i = 0; i < MAX_BOOKS; i++)
     {
+        if(bookArray[i].quantity != 0){
+        printf(Light_Red"Book %d: "Reset, i + 1);
         printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
+    }
     }
 }
 
@@ -130,11 +137,17 @@ int main()
     strcpy(bookArray[3].genre, "Fiction");
     bookArray[3].price = 8.99;
     bookArray[3].quantity = 1;
-    while (1)
-    {
+    printf(Magenta "Welcome to the Book Store!\n" Reset);
+    
+    // char choose=WantToContinue();
+    // if(choose=='y'){
+    // while (choose == 'y'){
 
+    while(1){
         int choice;
-        List(choice);
+        int choose;
+        
+        choice=List(choose);
         if (choice == 1)
         {
             ShowBooks(bookArray);
@@ -257,7 +270,9 @@ int main()
             {
                 fprintf(file, "%s %s %s %.2f %d\n", soldBook[i].title, soldBook[i].author, soldBook[i].genre, soldBook[i].price, soldBook[i].quantity);
             }
+            fclose(file);
         }
+        
         ShowBooks(bookArray);
     }
     return 0;
