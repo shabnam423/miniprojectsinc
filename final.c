@@ -19,6 +19,7 @@
 // file, allowing users to persist data between sessions.
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #define Red "\x1b[31m"
 #define Yellow "\x1b[33m"
 #define Blue "\x1b[34m"
@@ -38,7 +39,10 @@ struct Book
     float price;
     int quantity;
 };
-int UpdateBookDetails(struct Book bookArray[])
+int List(int choice);
+void ShowBooks(struct Book bookArray[MAX_BOOKS]);
+int UpdateBookDetails(struct Book bookArray[MAX_BOOKS]);
+int UpdateBookDetails(struct Book bookArray[MAX_BOOKS])
 {
     int choice;
     int i;
@@ -76,34 +80,40 @@ int UpdateBookDetails(struct Book bookArray[])
     }
 }
 
-int List(int choice)
+int List(int choose)
 {
-
-    printf("Choose an option: \n");
+printf("***************************************************\n");
     printf("1. Display all Books: \n");
     printf("2. Add New Book \n");
     printf("3. Search Books: \n");
     printf("4. Update Book Details \n"); // only price & quantity
     printf("5. Sell Books \n");
     printf("6. View Sales Report \n");
-    printf("7. Save and Load Data \n");
-    printf(Red "8. Exit \n" Reset);
-    scanf("%d", &choice);
-    return choice;
+    printf(Red "7. Exit \n" Reset);
+    printf("Choose an option: \n");
+    scanf("%d", &choose);
+    if(choose == 7){
+        printf(Cyan"Thank you for using our program!\n"Reset);
+        exit(0);
+    }
+    return choose;
 }
-void ShowBooks(struct Book bookArray[])
-{
+void ShowBooks(struct Book bookArray[MAX_BOOKS])
+{ 
     for (int i = 0; i < MAX_BOOKS; i++)
     {
+        if(bookArray[i].quantity != 0){
+        printf(Light_Red"Book %d: "Reset, i + 1);
         printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
+    }
     }
 }
 
 int main()
 {
-struct Book soldBook[MAX_BOOKS];
+    struct Book soldBook[MAX_BOOKS];
     struct Book bookArray[MAX_BOOKS];
-int soldBookindex=0;
+    int soldBookindex = 0;
     strcpy(bookArray[0].title, "The Great Gatsby");
     strcpy(bookArray[0].author, "F. Scott Fitzgerald");
     strcpy(bookArray[0].genre, "Fiction");
@@ -127,114 +137,143 @@ int soldBookindex=0;
     strcpy(bookArray[3].genre, "Fiction");
     bookArray[3].price = 8.99;
     bookArray[3].quantity = 1;
-while(1){
+    printf(Magenta "Welcome to the Book Store!\n" Reset);
     
-    int choice;
-    int List(choice);
-    if (choice == 1)
-    {
-        ShowBooks(bookArray);
-    }
-    else if (choice == 2)
-    {
-        int i;
-        printf("Enter the number of books you want to add: ");
-        scanf("%d", &i);
-        if (i > 45)
-        {
-            printf("Book not added. Please enter a valid number of books. \n");
-            scanf("%d", &i);
-        }
-        for (int j = 0; j < i; j++)
-        {
-            printf("Enter the details of book %d:\n", j + 1);
-            printf("Title: ");
-            scanf("%s", bookArray[j].title);
-            printf("Author: ");
-            scanf("%s", bookArray[j].author);
-            printf("Genre: ");
-            scanf("%s", bookArray[j].genre);
-            printf("Price: ");
-            scanf("%f", &bookArray[j].price);
-            printf("Quantity: ");
-            scanf("%d", &bookArray[j].quantity);
-            printf("\n");
-        }
-    }
-    else if (choice == 3)
-    {
-        printf("Enter 1 to search by title, 2 to search by author, 3 to search by genre: ");
-        scanf("%d", &choice);
+    // char choose=WantToContinue();
+    // if(choose=='y'){
+    // while (choose == 'y'){
+
+    while(1){
+        int choice;
+        int choose;
+        
+        choice=List(choose);
         if (choice == 1)
         {
-            printf("Enter the title of the book you want to search: ");
-            char title[50];
-            scanf("%s", title);
-            for (int i = 0; i < MAX_BOOKS; i++)
-            {
-                if (strcmp(title, bookArray[i].title) == 0)
-                {
-                    printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
-                }
-            }
+            ShowBooks(bookArray);
         }
         else if (choice == 2)
         {
-            printf("Enter the author of the book you want to search: ");
-            char author[50];
-            scanf("%s", author);
-            for (int i = 0; i < MAX_BOOKS; i++)
+            int i;
+            printf("Enter the number of books you want to add: ");
+            scanf("%d", &i);
+            if (i > 45)
             {
-                if (strcmp(author, bookArray[i].author) == 0)
-                {
-                    printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
-                }
+                printf("Book not added. Please enter a valid number of books. \n");
+                scanf("%d", &i);
+            }
+            for (int j = 0; j < i; j++)
+            {
+                printf("Enter the details of book %d:\n", j + 1);
+                printf("Title: ");
+                scanf("%s", bookArray[j].title);
+                printf("Author: ");
+                scanf("%s", bookArray[j].author);
+                printf("Genre: ");
+                scanf("%s", bookArray[j].genre);
+                printf("Price: ");
+                scanf("%f", &bookArray[j].price);
+                printf("Quantity: ");
+                scanf("%d", &bookArray[j].quantity);
+                printf("\n");
             }
         }
         else if (choice == 3)
         {
-            printf("Enter the genre of the book you want to search: ");
-            char genre[50];
-            scanf("%s", genre);
-            for (int i = 0; i < MAX_BOOKS; i++)
+            printf("Enter 1 to search by title, 2 to search by author, 3 to search by genre: ");
+            scanf("%d", &choice);
+            if (choice == 1)
             {
-                if (strcmp(genre, bookArray[i].genre) == 0)
+                printf("Enter the title of the book you want to search: ");
+                char title[50];
+                scanf("%s", title);
+                for (int i = 0; i < MAX_BOOKS; i++)
                 {
-                    printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
+                    if (strcmp(title, bookArray[i].title) == 0)
+                    {
+                        printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
+                    }
                 }
             }
+            else if (choice == 2)
+            {
+                printf("Enter the author of the book you want to search: ");
+                char author[50];
+                scanf("%s", author);
+                for (int i = 0; i < MAX_BOOKS; i++)
+                {
+                    if (strcmp(author, bookArray[i].author) == 0)
+                    {
+                        printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
+                    }
+                }
+            }
+            else if (choice == 3)
+            {
+                printf("Enter the genre of the book you want to search: ");
+                char genre[50];
+                scanf("%s", genre);
+                for (int i = 0; i < MAX_BOOKS; i++)
+                {
+                    if (strcmp(genre, bookArray[i].genre) == 0)
+                    {
+                        printf("\"%s\" by %s, Genre: %s, Price: $%.2f, Quantity: %d\n", bookArray[i].title, bookArray[i].author, bookArray[i].genre, bookArray[i].price, bookArray[i].quantity);
+                    }
+                }
+            }
+            else
+            {
+                printf("Invalid choice. Please try again and enter a valid choice: \n");
+                scanf("%d", &choice);
+            }
         }
-        else
+        else if (choice == 4)
         {
-            printf("Invalid choice. Please try again and enter a valid choice: \n");
-            scanf("%d", &choice);
+            UpdateBookDetails(bookArray);
         }
-    }
-    else if (choice == 4)
-    {
-        UpdateBookDetails(bookArray);
-    }
-    else if (choice == 5)
-    {
-        ShowBooks(bookArray);
-        int i;
+        else if (choice == 5)
+        {
+            ShowBooks(bookArray);
+            int i;
 
-        printf("Select the index of the book you want to sell: ");
-        scanf("%d", &i);
-        if (i < 0 || i >= MAX_BOOKS)
-        {
-            printf("Invalid book index.\n");
-            printf("Try again...\nSelect the index of the book you want to sell: ");
+            printf("Select the index of the book you want to sell: ");
             scanf("%d", &i);
-            //kitabin indexin goturduk-indi sat-yeni sil o kitabi.
+            if (i < 0 || i >= MAX_BOOKS)
+            {
+
+                printf("Invalid book index.\n");
+                printf("Try again...\nSelect the index of the book you want to sell: ");
+                scanf("%d", &i);
+            }
+
+            // kitabin indexin goturduk-indi sat-yeni sil o kitabi.
+            // if choice==6:     //6. View Sales Report
+            /*soldBook arrayini for icine aliriq ve ve ordaki melumatlari file icine yaziriq*/
+
+            soldBook[soldBookindex] = bookArray[i - 1];
+            soldBookindex++;
+            bookArray[i - 1].quantity--;
+            for (int j = i; j < MAX_BOOKS; ++j)
+            {
+                strcpy(bookArray[j].title, bookArray[j + 1].title);
+                strcpy(bookArray[j].author, bookArray[j + 1].author);
+                strcpy(bookArray[j].genre, bookArray[j + 1].genre);
+                bookArray[j].price = bookArray[j + 1].price;
+                bookArray[j].quantity = bookArray[j + 1].quantity;
+            }
         }
-        //if choice==6:
-        /*soldBook arrayini for icine aliriq ve ve ordaki melumatlari file icine yaziriq*/
+        else if (choice == 6)
+        {
+            FILE *file;
+            file = fopen("text.txt", "a");
+            for (int i = 0; i < soldBookindex; i++)
+            {
+                fprintf(file, "%s %s %s %.2f %d\n", soldBook[i].title, soldBook[i].author, soldBook[i].genre, soldBook[i].price, soldBook[i].quantity);
+            }
+            fclose(file);
+        }
         
-       soldBook[soldBookindex]=bookArray[i];
-soldBookindex++;
+        ShowBooks(bookArray);
     }
-    ShowBooks(bookArray);
-}
     return 0;
 }
